@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BuzzUpport</title>
+    <style>
+        body {
+            font-family: Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            color: #32CD32; /* Verde */
+        }
+        header {
+            background-color: #FFA500; /* Naranja */
+            color: black;
+            padding: 10px 0;
+            text-align: center;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #333;
+            color: #32CD32; /* Verde */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .services {
+            list-style: none;
+            padding: 0;
+        }
+        .services li {
+            padding: 10px 0;
+            border-bottom: 1px solid #666;
+            cursor: pointer;
+        }
+        .services li:last-child {
+            border-bottom: none;
+        }
+        .service-info {
+            display: none;
+            padding: 10px 0;
+            color: #32CD32; /* Verde */
+        }
+        footer {
+            background-color: rgba(255, 165, 0, 0.8); /* Naranja con transparencia */
+            color: black;
+            text-align: center;
+            padding: 5px 0;
+            font-size: 12px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+        @media (max-width: 600px) {
+            footer {
+                font-size: 10px;
+                padding: 3px 0;
+            }
+        }
+        .contact {
+            margin: 20px 0;
+            padding: 10px;
+            background-color: #444;
+            color: #FFA500; /* Naranja */
+            text-align: center;
+            cursor: pointer;
+        }
+        .encargar-container {
+            background-color: #444;
+            color: #32CD32;
+            padding: 20px;
+            margin: 20px auto;
+            width: 80%;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .encargar-container input, .encargar-container textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #666;
+            background-color: #333;
+            color: #32CD32;
+        }
+        .encargar-container button {
+            background-color: #FFA500;
+            color: black;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+        .suggestions-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .suggestions-list li {
+            padding: 5px;
+            background-color: #555;
+            cursor: pointer;
+        }
+        .suggestions-list li:hover {
+            background-color: #666;
+        }
+    </style>
+    <script>
+        function toggleServiceInfo(id) {
+            var info = document.getElementById(id);
+            if (info.style.display === "none") {
+                info.style.display = "block";
+            } else {
+                info.style.display = "none";
+            }
+        }
+
+        function goToContactPage() {
+            window.location.href = "#contact-page";
+        }
+
+        const problems = [
+            "Reparación de hardware",
+            "Eliminación de virus y malware",
+            "Instalación de software",
+            "Mantenimiento preventivo",
+            "Recuperación de datos",
+            "Actualización de componentes"
+        ];
+
+        function suggestProblems() {
+            const input = document.getElementById('encargar-input').value.toLowerCase();
+            const suggestions = document.getElementById('suggestions');
+            suggestions.innerHTML = '';
+            if (input) {
+                const filteredProblems = problems.filter(problem => problem.toLowerCase().includes(input));
+                filteredProblems.forEach(problem => {
+                    const li = document.createElement('li');
+                    li.textContent = problem;
+                    li.onclick = () => selectProblem(problem);
+                    suggestions.appendChild(li);
+                });
+            }
+        }
+
+        function selectProblem(problem) {
+            document.getElementById('encargar-input').value = problem;
+            document.getElementById('suggestions').innerHTML = '';
+        }
+
+        function sendProblem() {
+            const problem = document.getElementById('encargar-input').value;
+            const details = document.getElementById('problem-details').value;
+            const mailtoLink = `mailto:[l.fisco@galileo.edu.ar]?subject=Problema: ${encodeURIComponent(problem)}&body=${encodeURIComponent(details)}`;
+            window.location.href = mailtoLink;
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <img src="C:\Users\Fisco\OneDrive\Desktop\WEB\logo.png" alt="Servicio Técnico" style="height: 50px; margin-right: 20px;">
+        <h1>BuzzUpport - Servicio Técnico</h1>
+    </header>
+    <div class="container">
+        <h2>Bienvenido a nuestro servicio técnico</h2>
+        <p>Ofrecemos soluciones rápidas y efectivas para todos tus problemas informáticos. Nuestro equipo de expertos está listo para ayudarte con:</p>
+        <ul class="services">
+            <li onclick="toggleServiceInfo('hardware-info')">Reparación de hardware</li>
+            <div id="hardware-info" class="service-info">
+                <p>Ofrecemos diagnósticos y reparaciones para todo tipo de hardware, incluyendo placas base, discos duros, tarjetas gráficas, y más.</p>
+            </div>
+            <li onclick="toggleServiceInfo('virus-info')">Eliminación de virus y malware</li>
+            <div id="virus-info" class="service-info">
+                <p>Eliminamos todo tipo de software malicioso de tu sistema, asegurando la protección de tus datos y la estabilidad de tu computadora.</p>
+            </div>
+            <li onclick="toggleServiceInfo('software-info')">Instalación de software</li>
+            <div id="software-info" class="service-info">
+                <p>Te ayudamos a instalar y configurar cualquier tipo de software, asegurando su correcto funcionamiento.</p>
+            </div>
+            <li onclick="toggleServiceInfo('mantenimiento-info')">Mantenimiento preventivo</li>
+            <div id="mantenimiento-info" class="service-info">
+                <p>Realizamos mantenimiento regular para prevenir problemas futuros y mantener tu computadora en óptimas condiciones.</p>
+            </div>
+            <li onclick="toggleServiceInfo('datos-info')">Recuperación de datos</li>
+            <div id="datos-info" class="service-info">
+                <p>Recuperamos datos perdidos o dañados de discos duros, unidades SSD, y otros medios de almacenamiento.</p>
+            </div>
+            <li onclick="toggleServiceInfo('actualizacion-info')">Actualización de componentes</li>
+            <div id="actualizacion-info" class="service-info">
+                <p>Te asesoramos y realizamos actualizaciones de componentes para mejorar el rendimiento de tu computadora.</p>
+            </div>
+        </ul>
+        <div class="contact" onclick="goToContactPage()">Contáctanos</div>
+    </div>
+    <div id="contact-page" class="container">
+        <h2>Contáctanos</h2>
+        <p>Para asistencia, llámanos a:</p>
+        <p style="font-size: 1.5em; color: #FFA500;">[+54 9 11 2719-6412 // +54 9 11 6649-3626]</p> <!-- Reemplaza con el número de teléfono -->
+    </div>
+    <div class="encargar-container">
+        <input type="text" id="encargar-input" placeholder="Describe tu problema..." oninput="suggestProblems()">
+        <ul id="suggestions" class="suggestions-list"></ul>
+        <textarea id="problem-details" placeholder="Especifica más detalles aquí..."></textarea>
+        <button onclick="sendProblem()">Enviar</button>
+    </div>    
+    <footer>
+        <p>© 2024 - BuzzUpport - Servicio Técnico para Ordenadores</p>
+    </footer>
+</body>
+</html>
